@@ -1,0 +1,33 @@
+import web3
+import requests
+import datetime
+
+w3 = web3.Web3(web3.HTTPProvider("https://mainnet.infura.io/v3/12a58771cc3b449c844b83435753ee2d"))
+
+def get_first_and_last_block_numbers(date):
+    """
+    Retrieve the first and last block numbers for a given date.
+
+    Args:
+        date: The date for which to retrieve the first and last block numbers.
+
+    Returns:
+        A tuple containing the first and last block numbers.
+    """
+
+    # Get the latest block number.
+    latest_block_number = w3.eth.get_block_number()
+
+    # Get the block number for the given date.
+    block_number = requests.get(f"https://eth.chainlist.org/api/v1/eth/blockNumberAtDate/{date}").json()["data"]
+
+    # Return the first and last block numbers.
+    return (block_number, latest_block_number)
+
+if __name__ == "__main__":
+    # Get the first and last block numbers for the current date.
+    first_block_number, last_block_number = get_first_and_last_block_numbers(datetime.date.today())
+
+    # Print the first and last block numbers.
+    print("First block number:", first_block_number)
+    print("Last block number:", last_block_number)
