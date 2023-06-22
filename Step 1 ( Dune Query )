@@ -1,0 +1,22 @@
+SELECT
+  DATE(block_time) AS date,
+  SUM(gas_used) AS daily_gas_used
+FROM
+  ethereum.transactions
+WHERE
+  block_time >= current_date - interval '5' year
+GROUP BY
+  DATE(block_time)
+ORDER BY
+  DATE(block_time) ASC;
+
+
+
+
+
+
+
+
+  
+
+
